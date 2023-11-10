@@ -7,8 +7,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+process.setMaxListeners(101);
 const pool = new WorkerPool(
-  9,
+  100,
   join(__dirname, 'worker.mjs'),
   join(process.env['userprofile'] ?? '/', 'downloads')
 );
@@ -28,7 +29,7 @@ export function createServer(port) {
         res.statusCode = 203;
         res.end('Enqueued');
       })
-      .listen(port)
+      .listen(port, '127.0.0.1')
       .on('listening', () => {
         console.log(`Server listening on port ${port}`);
         r(s);
