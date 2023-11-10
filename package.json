@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier . --write --cache",
     "discord": "node ./discord_files/main.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test --trace-warnings"
   },
   "author": "",
   "license": "ISC"

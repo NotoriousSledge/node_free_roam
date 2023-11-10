@@ -1,13 +1,17 @@
 // @ts-check
 
 import http from 'node:http';
-import {parseIncomingMessage} from '../parse_incoming_message.mjs';
-import {WorkerPool} from '../worker_pool.mjs';
-import {dirname, join} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import { parseIncomingMessage } from '../parse_incoming_message.mjs';
+import { WorkerPool } from '../worker_pool.mjs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const pool = new WorkerPool(100, join(__dirname, 'worker.mjs'));
+const pool = new WorkerPool(
+  9,
+  join(__dirname, 'worker.mjs'),
+  join(process.env['userprofile'] ?? '/', 'downloads')
+);
 /** @param {number} port @returns {Promise<ReturnType<typeof http.createServer>>} **/
 export function createServer(port) {
   return new Promise((r) => {
